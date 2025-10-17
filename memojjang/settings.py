@@ -38,7 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 서드파티 앱
+    'crispy_forms',
+    'crispy_bootstrap4',
+    # 로컬 앱
+    'apps.users',
+    'apps.memos',
 ]
+
+# Crispy Forms 설정
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
