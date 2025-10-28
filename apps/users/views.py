@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.views import (
     LoginView, 
     PasswordResetView, 
     PasswordResetDoneView,
     PasswordResetConfirmView,
-    PasswordResetCompleteView
+    PasswordResetCompleteView,
+    PasswordChangeView
 )
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views import View
+from django.utils.decorators import method_decorator
 from .forms import UserRegisterForm, UserLoginForm
 
 
@@ -91,3 +95,20 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     """비밀번호 재설정 완료 뷰"""
     template_name = 'users/password_reset_complete.html'
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    """로그인한 사용자의 비밀번호 변경 뷰"""
+    template_name = 'users/password_change_form.html'
+    success_url = reverse_lazy('users:password_change_done')
+    
+    def form_valid(self, form):
+        messages.success(self.request, '비밀번호가 성공적으로 변경되었습니다!')
+        return super().form_valid(form)
+
+
+class UserPasswordChangeDoneView(View):
+    """비밀번호 변경 완료 뷰"""
+    
+    def get(self, request):
+        return render(request, 'users/password_change_done.html')

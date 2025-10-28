@@ -8,7 +8,11 @@ urlpatterns = [
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     
-    # 비밀번호 재설정
+    # 비밀번호 변경 (로그인 필요)
+    path('password-change/', views.UserPasswordChangeView.as_view(), name='password_change'),
+    path('password-change/done/', views.UserPasswordChangeDoneView.as_view(), name='password_change_done'),
+    
+    # 비밀번호 재설정 (이메일 방식 - 백업용)
     path('password-reset/', views.UserPasswordResetView.as_view(), name='password_reset'),
     path('password-reset/done/', views.UserPasswordResetDoneView.as_view(), name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/', views.UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),

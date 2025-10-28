@@ -17,12 +17,6 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     
-                    <div class="d-flex justify-content-end mb-3">
-                        <a href="{% url 'users:password_reset' %}" class="text-muted small">
-                            <i class="bi bi-question-circle"></i> 비밀번호를 잊으셨나요?
-                        </a>
-                    </div>
-                    
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="bi bi-box-arrow-in-right"></i> 로그인
@@ -30,9 +24,13 @@
                     </div>
                 </form>
                 <hr>
-                <p class="text-center mb-0">
+                <p class="text-center mb-2">
                     계정이 없으신가요? 
                     <a href="{% url 'users:register' %}">회원가입</a>
+                </p>
+                <p class="text-center mb-0 text-muted small">
+                    <i class="bi bi-info-circle"></i> 
+                    로그인 후 <a href="{% url 'users:password_change' %}">비밀번호 변경</a>이 가능합니다
                 </p>
             </div>
         </div>

@@ -43,6 +43,10 @@
                                 <i class="bi bi-person-circle"></i> {{ user.username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'users:password_change' %}">
+                                    <i class="bi bi-key"></i> 비밀번호 변경
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'users:logout' %}">
                                     <i class="bi bi-box-arrow-right"></i> 로그아웃
                                 </a></li>
