@@ -112,3 +112,41 @@ class UserPasswordChangeDoneView(View):
     
     def get(self, request):
         return render(request, 'users/password_change_done.html')
+
+
+class SimplePasswordResetView(View):
+    """테스트용 간단한 비밀번호 초기화 뷰 (인증 불필요)"""
+    
+    def get(self, request):
+        """비밀번호 초기화 폼 표시"""
+        return render(request, 'users/simple_password_reset.html')
+    
+    def post(self, request):
+        """비밀번호 초기화 처리"""
+        username = request.POST.get('username', '').strip()
+        
+        if not username:
+            messages.error(request, '사용자 이름을 입력해주세요.')
+            return render(request, 'users/simple_password_reset.html')
+        
+        try:
+            from django.contrib.auth.models import User
+            user = User.objects.get(username=username)
+            
+            # 기본 비밀번호로 초기화 (테스트용)
+            default_password = 'test1234'
+            user.set_password(default_password)
+            user.save()
+            
+            messages.success(
+                request, 
+                f'{username}님의 비밀번호가 초기화되었습니다! 새 비밀번호: {default_password}'
+            )
+            return redirect('users:login')
+            
+        except User.DoesNotExist:
+            messages.error(request, f'사용자 "{username}"을(를) 찾을 수 없습니다.')
+            return render(request, 'users/simple_password_reset.html')
+        except Exception as e:
+            messages.error(request, f'오류가 발생했습니다: {str(e)}')
+            return render(request, 'users/simple_password_reset.html')

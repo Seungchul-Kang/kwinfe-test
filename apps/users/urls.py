@@ -12,6 +12,9 @@ urlpatterns = [
     path('password-change/', views.UserPasswordChangeView.as_view(), name='password_change'),
     path('password-change/done/', views.UserPasswordChangeDoneView.as_view(), name='password_change_done'),
     
+    # 테스트용 간단한 비밀번호 초기화 (인증 불필요) ⚠️
+    path('simple-reset/', views.SimplePasswordResetView.as_view(), name='simple_reset'),
+    
     # 비밀번호 재설정 (이메일 방식 - 백업용)
     path('password-reset/', views.UserPasswordResetView.as_view(), name='password_reset'),
     path('password-reset/done/', views.UserPasswordResetDoneView.as_view(), name='password_reset_done'),
