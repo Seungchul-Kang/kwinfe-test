@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}로그아웃 - 메모짱{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-box-arrow-right"></i> 로그아웃 확인
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-circle" style="font-size: 4rem; color: #ffc107;"></i>
+                    </div>
+                    
+                    <p class="text-center mb-4 fs-5">
+                        <strong>{{ user.username }}</strong>님, 정말 로그아웃하시겠습니까?
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="bi bi-box-arrow-right"></i> 로그아웃
+                            </button>
+                            <a href="{% url 'memos:list' %}" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-x-circle"></i> 취소
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

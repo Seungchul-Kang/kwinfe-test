@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views import View
 from .forms import UserRegisterForm, UserLoginForm
 
 
@@ -32,6 +33,23 @@ class UserLoginView(LoginView):
         return super().form_valid(form)
 
 
-class UserLogoutView(LogoutView):
-    """로그아웃 뷰"""
-    pass
+class UserLogoutView(View):
+    """로그아웃 뷰 - GET/POST 모두 처리"""
+    
+    def get(self, request):
+        """GET 요청 시 로그아웃 확인 페이지 표시"""
+        if request.user.is_authenticated:
+            return render(request, 'users/logout_confirm.html')
+        else:
+            messages.info(request, '이미 로그아웃되어 있습니다.')
+            return redirect('home')
+    
+    def post(self, request):
+        """POST 요청 시 실제 로그아웃 처리"""
+        if request.user.is_authenticated:
+            username = request.user.username
+            logout(request)
+            messages.success(request, f'{username}님, 로그아웃되었습니다.')
+        else:
+            messages.info(request, '이미 로그아웃되어 있습니다.')
+        return redirect('home')
