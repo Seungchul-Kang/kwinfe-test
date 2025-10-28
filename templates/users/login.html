@@ -16,6 +16,13 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
+                    
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{% url 'users:password_reset' %}" class="text-muted small">
+                            <i class="bi bi-question-circle"></i> 비밀번호를 잊으셨나요?
+                        </a>
+                    </div>
+                    
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="bi bi-box-arrow-in-right"></i> 로그인
